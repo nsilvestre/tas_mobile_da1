@@ -1,8 +1,6 @@
 # TAS (Test Automation Solution)
 
-This framework has been developed for internal use on Belatrix projects and adapted to EATSA necesites.
-
-It uses **Java** as main language, **Cucumber** (_https://cucumber.io/_) and **Appium** (_http://appium.io_) for scenarios creation and Mobile testing and **RestAssured** (_http://rest-assured.io_) for API testing/actions. 
+This framework uses **Java** as main language, **Cucumber** (_https://cucumber.io/_) and **Appium** (_http://appium.io_) for scenarios creation and Mobile testing and **RestAssured** (_http://rest-assured.io_) for API testing/actions. 
 
 
 ## Getting Started
@@ -118,18 +116,18 @@ Regardless which method is chosen, the **app** capability that takes place in th
 
 _**Json file is located at:**_ 
 ```
-/Users/nsilvestre/Documents/EATSA/Kiosk/Kiosk/Automation-UITests/json_configs/appium_configs/eatsa_simulated_ipad_air_2.json
+/Users/nsilvestre/Documents/EATSA/Kiosk/Kiosk/Automation-UITests/json_configs/appium_configs/simulated_ipad_air_2.json
 ```
 
 Update app path:
 
 **from:** 
 ```
-"app":"/Users/travis/build/Keenwawa/Kiosk/Kiosk_Debug_test_simulator.app.zip"
+"app":"/Users/travis/build/Kiosk/Kiosk_Debug_test_simulator.app.zip"
 ```
 **to:**
 ```
-"app":"/Users/nsilvestre/Documents/Apps/Kiosk_Debug_test_simulator.app.zip"
+"app":"/Users/nsilvestre/Apps/Kiosk_Debug_test_simulator.app.zip"
 ```
 
 
@@ -147,13 +145,13 @@ $ appium
 $ mvn test
 ```
 
-This command will execute the tests based on the configuration specified on TestRunner.java (_Kiosk/Automation-UITests/src/test/java/com/company/test/runner/TestRunner.java_) which by default is the entire suite (_features = {"src/test/java/com/company/test/features/EATSA"}_).
+This command will execute the tests based on the configuration specified on TestRunner.java (_Kiosk/Automation-UITests/src/test/java/com/company/test/runner/TestRunner.java_) which by default is the entire suite (_features = {"src/test/java/com/company/test/features/CLIENT"}_).
 
 
 If you want to execute just one or few feature files instead, you can do so:   
 
 ```
-$ mvn test -Dcucumber.options="--glue com/company/test/steps/common/ --glue com/company/test/steps/EATSA src/test/java/com/company/test/features/EATSA/A_SetUp.feature src/test/java/com/company/test/features/EATSA/OutOfStocks.feature"
+$ mvn test -Dcucumber.options="--glue com/company/test/steps/common/ --glue com/company/test/steps/CLIENT src/test/java/com/company/test/features/CLIENT/A_SetUp.feature src/test/java/com/company/test/features/CLIENT/OutOfStocks.feature"
 ```
 
 In this case just **A_SetUp.feature** (_it’s always needed for environment configuration purposes_) and **OutOfStocks.feature** will be executed.
@@ -162,7 +160,7 @@ In this case just **A_SetUp.feature** (_it’s always needed for environment con
 
 3. Test results report can be found at: 
 ```
-Kiosk/Automation-UITests/target/Eatsa/cucumber-report-html/cucumber-html-reports/
+Kiosk/Automation-UITests/target/CLIENT/cucumber-report-html/cucumber-html-reports/
 ```
 
 
@@ -181,7 +179,7 @@ Kiosk/Automation-UITests/target/Eatsa/cucumber-report-html/cucumber-html-reports
 4. VM options: it’s the same argument passed to Maven in the previous example: 
 
 ```
--Dcucumber.options="--glue com/company/test/steps/common/ --glue com/company/test/steps/EATSA src/test/java/com/company/test/features/EATSA/A_SetUp.feature src/test/java/com/company/test/features/EATSA/OutOfStocks.feature"
+-Dcucumber.options="--glue com/company/test/steps/common/ --glue com/company/test/steps/CLIENT src/test/java/com/company/test/features/CLIENT/A_SetUp.feature src/test/java/com/company/test/features/CLIENT/OutOfStocks.feature"
 ```
 
 _Glue code: it's the code that interacts with the application. It's the implementation of the actions described on .feature files._ 
@@ -310,7 +308,7 @@ loginPage.swipeToLogin();
 
 # Features, steps and page objects relation
 
-Each ‘**.feature file’** **(src/test/features/) **groups scenarios that are related and test one particular feature. For instance, `AddItemToCart.feature` has the following scenarios:
+Each ‘**.feature file’** **(src/test/features/)** groups scenarios that are related and test one particular feature. For instance, `AddItemToCart.feature` has the following scenarios:
 
 
 
@@ -319,7 +317,7 @@ Each ‘**.feature file’** **(src/test/features/) **groups scenarios that are 
 *   Add item from re-order
 *   Add item from details screen but accessing through re-order
 
-On the other hand, each ‘**steps definitition file’** **(src/test/steps/) **groups the steps based on the following criterias:
+On the other hand, each ‘**steps definitition file’** **(src/test/steps/)** groups the steps based on the following criterias:
 
 
 
@@ -328,7 +326,7 @@ On the other hand, each ‘**steps definitition file’** **(src/test/steps/) **
 *   One particular View type, the alerts:` AlertsSteps.java`
 *   Steps that apply in more than one screen:` EatsaUtilsSteps`
 
-Per each ‘**steps definition class’** exists a ‘**page object class’ (src/test/pages/) **that implement each steps. For instance:
+Per each ‘**steps definition class’** exists a ‘**page object class’ (src/test/pages/)** that implement each steps. For instance:
 
 `ItemDetailsSteps.java` has two steps: 
 
@@ -361,7 +359,7 @@ getWaitDriver().until(ExpectedConditions.elementToBeClickable(MobileBy.iOSNsPred
 ```
 
 
-So to sum up, **feature** files contains scenarios that are related to one feature. Each scenario has **steps** that are executed in different screens. Therefore, the** steps **of a scenario, are implemented in different **step definition** classes. Each **step definition** class corresponds to one **page **class (I.E: `CheckOutSteps.java -> CheckOutPage.java`).
+So to sum up, **feature** files contains scenarios that are related to one feature. Each scenario has **steps** that are executed in different screens. Therefore, the **steps** of a scenario, are implemented in different **step definition** classes. Each **step definition** class corresponds to one **page** class (I.E: `CheckOutSteps.java -> CheckOutPage.java`).
 
 
 # Feature and Scenario creation
@@ -371,14 +369,14 @@ So to sum up, **feature** files contains scenarios that are related to one featu
 
 ## Feature
 
-Each feature needs to start with the **Feature **keyword, follow by its name. The feature, is going to be identify in the reports by this name. Finally, after this line and before the first scenario, there’s a place for the description of the user story.
+Each feature needs to start with the **Feature** keyword, follow by its name. The feature, is going to be identify in the reports by this name. Finally, after this line and before the first scenario, there’s a place for the description of the user story.
 
 
 ## Scenario
 
-Each scenario must start with the **Scenario Outline **keyword followed by a brief scenario description. **Scenario Outline **keyword works together with the **Examples **keywords, which is a table appended at the end of the scenario. 
+Each scenario must start with the **Scenario Outline** keyword followed by a brief scenario description. **Scenario Outline** keyword works together with the **Examples** keywords, which is a table appended at the end of the scenario. 
 
-The **Scenario Outline** keyword can be used to run the same Scenario multiple times, with different combinations of values. Those values are included as variables in the steps (_<config> and <partner> for below example_) and their values are specified in the Examples data table. The **Scenario Outline **will run one time per each row in the table passing the data of the row to the steps. In this way we can execute the same scenario multiple times just adding a new rows to the Examples table.
+The **Scenario Outline** keyword can be used to run the same Scenario multiple times, with different combinations of values. Those values are included as variables in the steps (_<config> and <partner> for below example_) and their values are specified in the Examples data table. The **Scenario Outline** will run one time per each row in the table passing the data of the row to the steps. In this way we can execute the same scenario multiple times just adding a new rows to the Examples table.
 
 
 ```
@@ -401,9 +399,9 @@ And I save the changes
 Then the name is saved
 
 Examples:
-| config                     | partner |
-| eatsa_simulated_iPad_air_2 | ROTI    |
-| eatsa_simulated_iPad_air_2 | WOWBAO  |
+| config               | partner |
+| simulated_iPad_air_2 | CLIENT1 |
+| simulated_iPad_air_2 | CLIENT2 |
 ```
 
 
@@ -461,7 +459,7 @@ Examples:
 
 **Path:** Automation-UITests/src/test/java/com.company.test/steps
 
-Each **step** class, in its constructor, needs to get the **driver** from the **context**, and create the **page **object that corresponds to this **Steps** class (_CheckOutSteps corresponds to CheckOutPage_):
+Each **step** class, in its constructor, needs to get the **driver** from the **context**, and create the **page** object that corresponds to this **Steps** class (_CheckOutSteps corresponds to CheckOutPage_):
 
 
 ```
@@ -579,7 +577,7 @@ Page Object Pattern also known as POM (Page Object Model) is a design pattern th
 
 Each page object class must extends the base page **MobileBasePO**.
 
-**MobileBasePO **class is responsible for creating the explicits waits. There are three different Wait Drivers:
+**MobileBasePO** class is responsible for creating the explicits waits. There are three different Wait Drivers:
 
 
 
